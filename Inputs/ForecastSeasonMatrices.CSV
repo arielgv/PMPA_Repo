@@ -1,0 +1,5 @@
+﻿"PKey","Name","Desc","LoadAreaId","Season","TempUnit","TempOrig","TempDelta","HourDelta"
+"1","SpringGSP","Spring KGSP","1","1","67","0","1","1"
+"2","SummerGSP","Summer KGSP","1","2","67","0","1","1"
+"3","FallGSP","Fall KGSP","1","3","67","0","1","1"
+"4","WinterGSP","Winter KGSP","1","4","67","0","1","1"

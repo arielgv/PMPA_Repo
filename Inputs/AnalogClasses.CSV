@@ -1,0 +1,5 @@
+﻿"PKey","Name","Desc"
+"1","Analog","Analog class"
+"2","Parameter","Parameter class"
+"3","Set-Point","Set-Point class"
+"4","Lead-Lag","Lead-Lag class"

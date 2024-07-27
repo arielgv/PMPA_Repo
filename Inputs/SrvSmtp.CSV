@@ -1,0 +1,2 @@
+﻿"PKey","Name","Desc","Server","Port","ConnTmo","FrmAddress","FrmName","Auth","UserName","Password","ToAddress1","ToName1","ToAddress2","ToName2","ToAddress3","ToName3","CcAddress1","CcName1","CcAddress2","CcName2","CcAddress3","CcName3"
+"1","Email to Engineering","For sending automated reports to Engineering","mail.pmpa.com","25","20000","PiedmontMPA@pmpa.com","SCADA Reports","0","","","wblanton@pmpa.com","Will Blanton","mfrazier@pmpa.com","Mike Frazier","","","","","","","",""

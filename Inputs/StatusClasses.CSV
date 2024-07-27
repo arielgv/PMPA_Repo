@@ -1,0 +1,8 @@
+﻿"PKey","Name","Desc"
+"1","Momentary","Momentary class"
+"2","Sustained","Sustained class"
+"3","Non-Alarm","Non-Alarming class"
+"4","4 State Moment","4 State Momentary class"
+"5","Special Breaker","Breaker class"
+"6","Trip","Trip Alarm class"
+"7","Log Event Only"," Log Event Only class"
