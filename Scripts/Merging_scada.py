@@ -31,7 +31,8 @@ def merge_scada():
     file_names = [
         'station_dat.dat',
         'status_dat.dat',
-        'analog_dat.dat'
+        'analog_dat.dat',
+        'unit_dat.dat'
     ]
 
     # Compile content

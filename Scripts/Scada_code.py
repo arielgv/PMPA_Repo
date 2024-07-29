@@ -24,6 +24,13 @@ def scada_processing():
         print(df_status.head(3))
         generate_status_dat(df_status)
 
+    # MeasurementUnits.CSV
+    df_unit = process_measurement_units()
+    if df_unit is not None:
+        print("\nFirst rows of the measurement units DataFrame:")
+        print(df_unit.head(3))
+        generate_unit_dat(df_unit)
+
 def process_station_points():
     csv_path = os.path.join('..', 'Inputs', 'StationPoints.CSV')
     
@@ -102,6 +109,22 @@ def process_status_points(df_station):
     df_status_new['ConfigNormalState'] = df_status['NORMSTATE']
     
     return df_status_new
+
+def process_measurement_units():
+    csv_path = os.path.join('..', 'Inputs', 'MeasurementUnits.CSV')
+    
+    if not os.path.exists(csv_path):
+        print(f"Error: Could not find the file at {csv_path}")
+        return None
+    
+    print(f"File found: {csv_path}")
+    df = pd.read_csv(csv_path)
+    
+    df_unit = pd.DataFrame()
+    df_unit['record'] = range(1, len(df) + 1)
+    df_unit['NAME'] = df['Desc']
+    
+    return df_unit
 
 def generate_station_dat(df_station):
     dat_folder = os.path.join('..', 'Dat_files')
@@ -183,6 +206,30 @@ def generate_status_dat(df_status):
         f.write(" 0")
     
     print(f"status_dat.dat file generated: {status_filename}")
+
+def generate_unit_dat(df_unit):
+    dat_folder = os.path.join('..', 'Dat_files')
+    if not os.path.exists(dat_folder):
+        os.makedirs(dat_folder)
+    
+    unit_filename = os.path.join(dat_folder, "unit_dat.dat")
+    
+    now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    
+    with open(unit_filename, 'w') as f:
+        f.write("*\n")
+
+        f.write("*\n")
+        f.write("\t2\tUNIT\t0\t1\n")
+        f.write("*\trecord\tNAME\n")
+        f.write("*\n")
+        
+        for _, row in df_unit.iterrows():
+            f.write(f"\t{row.get('record', '')}\t'{row.get('NAME', '')}'\n")
+        
+        f.write(" 0")
+    
+    print(f"unit_dat.dat file generated: {unit_filename}")
 
 if __name__ == "__main__":
     scada_processing()
