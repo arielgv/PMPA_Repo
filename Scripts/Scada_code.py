@@ -3,39 +3,39 @@ import os
 from datetime import datetime
 
 def scada_processing():
-    print("Hello World from scada_processing!")
+    #print("Hello World from scada_processing!")
     
-    # Procesar StationPoints.CSV
+    #  StationPoints.CSV
     df_station = process_station_points()
     if df_station is not None:
         generate_station_dat(df_station)
     
-    # Procesar AnalogPoints.csv
+    #  AnalogPoints.csv
     df_analog = process_analog_points()
     if df_analog is not None:
-        print("\nPrimeras filas del DataFrame de puntos analógicos:")
-        print(df_analog.head())
+        print("\nFirst rows of the analog points DataFrame:")
+        print(df_analog.head(3))
         generate_analog_dat(df_analog)
 
+    #  Statuspoints.csv
     df_status = process_status_points(df_station)
     if df_status is not None:
-        print("\nPrimeras filas del DataFrame de puntos de estado:")
-        print(df_status.head())
+        print("\nFirst rows of the status points DataFrame:")
+        print(df_status.head(3))
         generate_status_dat(df_status)
 
 def process_station_points():
     csv_path = os.path.join('..', 'Inputs', 'StationPoints.CSV')
     
     if not os.path.exists(csv_path):
-        print(f"Error: No se pudo encontrar el archivo en {csv_path}")
+        print(f"Error: Could not find the file at {csv_path}")
         return None
     
-    print(f"Archivo encontrado: {csv_path}")
+    print(f"File found: {csv_path}")
     df_station = pd.read_csv(csv_path)
     
-    # Asegurarse de que tenemos la columna PKEY
     if 'PKEY' not in df_station.columns:
-        print("Error: La columna PKEY no está presente en StationPoints.CSV")
+        print("Error: The PKEY column is not present in StationPoints.CSV")
         return None
     
     column_mapping = {
@@ -47,7 +47,7 @@ def process_station_points():
     df_station = df_station.rename(columns=column_mapping)
     df_station['Order'] = range(1, len(df_station) + 1)
     
-    print("\nPrimeras filas del DataFrame de estaciones:")
+    print("\nFirst rows of the stations DataFrame:")
     print(df_station.head())
     
     return df_station
@@ -56,10 +56,10 @@ def process_analog_points():
     csv_path = os.path.join('..', 'Inputs', 'AnalogPoints.csv')
     
     if not os.path.exists(csv_path):
-        print(f"Error: No se pudo encontrar el archivo en {csv_path}")
+        print(f"Error: Could not find the file at {csv_path}")
         return None
     
-    print(f"Archivo encontrado: {csv_path}")
+    print(f"File found: {csv_path}")
     df = pd.read_csv(csv_path)
     
     df_analog = pd.DataFrame()
@@ -83,16 +83,15 @@ def process_status_points(df_station):
     csv_path = os.path.join('..', 'Inputs', 'StatusPoints.csv')
     
     if not os.path.exists(csv_path):
-        print(f"Error: No se pudo encontrar el archivo en {csv_path}")
+        print(f"Error: Could not find the file at {csv_path}")
         return None
     
-    print(f"Archivo encontrado: {csv_path}")
+    print(f"File found: {csv_path}")
     df_status = pd.read_csv(csv_path)
     
-    # Crear un diccionario de mapeo de NAME a PKEY desde df_station
+    # mapping dictionary from NAME to PKEY from df_station
     station_map = dict(zip(df_station['Key'], df_station['PKEY']))
     
-    # Crear el nuevo DataFrame con las columnas especificadas
     df_status_new = pd.DataFrame()
     df_status_new['Type'] = 1
     df_status_new['Name'] = df_status['NAME']
@@ -124,7 +123,7 @@ def generate_station_dat(df_station):
         f.write("*\n")
         
         for _, row in df_station.iterrows():
-            # Verificar si las columnas existen antes de acceder a ellas
+            
             order = row.get('Order', '')
             key = row.get('Key', '')
             name = row.get('Name', '')
@@ -133,7 +132,7 @@ def generate_station_dat(df_station):
         
         f.write(" 0")
     
-    print(f"Archivo .dat generado: {station_filename}")
+    print(f".dat file generated: {station_filename}")
 
 def generate_analog_dat(df_analog):
     dat_folder = os.path.join('..', 'Dat_files')
@@ -159,7 +158,7 @@ def generate_analog_dat(df_analog):
         
         f.write(" 0")
     
-    print(f"Archivo analog_dat.dat generado: {analog_filename}")
+    print(f"analog_dat.dat file generated: {analog_filename}")
 
 def generate_status_dat(df_status):
     dat_folder = os.path.join('..', 'Dat_files')
@@ -183,8 +182,7 @@ def generate_status_dat(df_status):
         
         f.write(" 0")
     
-    print(f"Archivo status_dat.dat generado: {status_filename}")
+    print(f"status_dat.dat file generated: {status_filename}")
 
 if __name__ == "__main__":
     scada_processing()
-
