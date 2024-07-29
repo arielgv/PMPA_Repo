@@ -96,6 +96,18 @@ def process_status_points(df_station):
     print(f"File found: {csv_path}")
     df_status = pd.read_csv(csv_path)
     
+    # Load PrefixSuffixes.csv
+    prefix_suffixes_path = os.path.join('..', 'Inputs', 'PrefixSuffixes.csv')
+    if not os.path.exists(prefix_suffixes_path):
+        print(f"Error: Could not find the file at {prefix_suffixes_path}")
+        return None
+    
+    print(f"File found: {prefix_suffixes_path}")
+    df_prefix_suffixes = pd.read_csv(prefix_suffixes_path)
+    
+    # case-insensitive mapping from Name to PKey in PrefixSuffixes
+    prefix_suffixes_map = {name.upper(): int(pkey) for name, pkey in zip(df_prefix_suffixes['Name'], df_prefix_suffixes['PKey'])}
+    
     # mapping dictionary from NAME to PKEY from df_station
     station_map = dict(zip(df_station['Key'], df_station['PKEY']))
     
@@ -103,7 +115,12 @@ def process_status_points(df_station):
     df_status_new['Type'] = 1
     df_status_new['Name'] = df_status['NAME']
     df_status_new['pStation'] = df_status['STATIONPID'].map(station_map)
-    df_status_new['pStates'] = df_status['PREFSUFFID']
+    
+    # New logic for pStates
+    df_status_new['pStates'] = df_status['PREFSUFFID'].apply(
+        lambda x: prefix_suffixes_map.get(x.upper(), 0) + 200 if x else 0
+    )
+    
     df_status_new['pALARM_GROUP'] = 1
     df_status_new['pConfiguredAORGroup'] = df_status['USERTYPEID']
     df_status_new['ConfigNormalState'] = df_status['NORMSTATE']
@@ -233,3 +250,4 @@ def generate_unit_dat(df_unit):
 
 if __name__ == "__main__":
     scada_processing()
+
