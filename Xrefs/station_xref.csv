@@ -1,0 +1,68 @@
+PKEY,NAME,DESC,ZONEID,ALRMPRIOR
+1,SYS$,System Points Station,ALLZONES,0
+2,MOONBEAM,Test Site,ALLZONES,0
+3,Weather,weather data for history and load forecasting & estimation,ALLZONES,0
+4,ABB01,Abbeville,ALLZONES,0
+5,CLI01,Clinton #1,ALLZONES,0
+6,CLI02,Clinton #2,ALLZONES,0
+7,EAS01,Easley #1,ALLZONES,0
+8,EAS03,Easley #3,ALLZONES,0
+9,EAS04A,Easley #4A,ALLZONES,0
+10,EAS04B,Easley #4B,ALLZONES,0
+11,EAS05,Easley #5,ALLZONES,0
+12,EAS06,Easley #6,ALLZONES,0
+13,GAF01A,Gaffney #1A,ALLZONES,0
+14,GAF01B,Gaffney #1B,ALLZONES,0
+15,GAF02,Gaffney #2,ALLZONES,0
+16,GRE02A,Greer #2A,ALLZONES,0
+17,GRE02B,Greer #2B,ALLZONES,0
+18,GRE03A,Greer #3A,ALLZONES,0
+19,GRE03B,Greer #3B,ALLZONES,0
+20,GRE04A,Greer #4A,ALLZONES,0
+21,GRE04B,Greer #4B,ALLZONES,0
+22,LAU03,Laurens #3,ALLZONES,0
+23,LAU04A,Laurens #4A,ALLZONES,0
+24,LAU04B,Laurens #4B,ALLZONES,0
+25,NEW02,Newberry #2,ALLZONES,0
+26,NEW03,Newberry #3,ALLZONES,0
+27,NEW04,Newberry #4,ALLZONES,0
+28,ROC10,Rock Hill #10 (Charlotte Ave),ALLZONES,0
+29,ROC11,Rock Hill #11 (Blackmon #2),ALLZONES,0
+30,ROC04,Rock Hill #4 (Huey #3),ALLZONES,0
+31,ROC05,Rock Hill #5 (Hwy 5 #4),ALLZONES,0
+32,ROC06,Rock Hill #6 (Springdale #5),ALLZONES,0
+33,UNI01,Union #1,ALLZONES,0
+34,UNI04,Union #4,ALLZONES,0
+35,UNI06,Union #6,ALLZONES,0
+36,WES01,Westminster,ALLZONES,0
+37,Duke,Duke (Charlotte),ALLZONES,0
+38,KOHLER_GEN,PMPA Generator Site,ALLZONES,0
+39,Southern,Southern (Birmingham),ALLZONES,0
+40,ROC07A,Rock Hill #7A (Homestead Rd),ALLZONES,0
+41,GRE06,Greer #6,ALLZONES,0
+42,GRE05A,Greer #5A,ALLZONES,0
+43,GRE05B,Greer #5B,ALLZONES,0
+44,Bob,Greer #5A (CLONE),ALLZONES,0
+45,ROC08,Rock Hill #8 (Stewart Ave),ALLZONES,0
+46,GRE07A,Greer #7A,ALLZONES,0
+47,GRE07B,Greer #7B,ALLZONES,0
+48,NEW05A,Newberry #5A,ALLZONES,0
+49,NEW05B,Newberry #5B,ALLZONES,0
+50,Santee,Southern (Birmingham) (CLONE),ALLZONES,0
+51,ROC09,Rock Hill #9 (Riverwalk Pkwy),ALLZONES,0
+52,ROC12,Rock Hill #12 (Huey #3),ALLZONES,0
+53,NEW06A,Newberry #6A,ALLZONES,0
+54,NEW06B,Newberry #6B,ALLZONES,0
+55,PMPA_HOURLY_LOAD_FORECAST,Contains the hourly PMPA load forecast points,ALLZONES,0
+56,ROC07B,Rock Hill #7B (Homestead Rd),ALLZONES,0
+57,Bob4,Greer #5A (CLONE),ALLZONES,0
+58,JEMSTAR2_TEST,Test Station for JEMSTAR2 Meters,ALLZONES,0
+59,COMM_STATS,Commline Statistics,ALLZONES,0
+60,Surplus,Surplus sales points,ALLZONES,0
+61,PMPA_Peaks,PMPA Peak Information,ALLZONES,0
+62,GBPW_DE,Data Exchange for GBPW's WebSurv Map,NO_EMAILS,0
+63,GCPW_DE,Data Exchange with GCPW for Generators,NO_EMAILS,0
+64,ENERGY_AUDIT,Points for Audting 3rd Party Invoices,ALLZONES,0
+65,TEA,Data from The Energy Authority API,ALLZONES,0
+66,CORH_DE,Data Exchange with Rock Hill for Generators,NO_EMAILS,0
+67,ABB02,Abbeville #2,ALLZONES,3

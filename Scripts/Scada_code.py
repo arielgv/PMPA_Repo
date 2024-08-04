@@ -13,22 +13,22 @@ def scada_processing():
     #  AnalogPoints.csv
     df_analog = process_analog_points(df_station)
     if df_analog is not None:
-        print("\nFirst rows of the analog points DataFrame:")
-        print(df_analog.head(3))
+        #print("\nFirst rows of the analog points DataFrame:")
+        #print(df_analog.head(3))
         generate_analog_dat(df_analog)
 
     #  Statuspoints.csv
     df_status = process_status_points(df_station)
     if df_status is not None:
-        print("\nFirst rows of the status points DataFrame:")
-        print(df_status.head(3))
+        #print("\nFirst rows of the status points DataFrame:")
+        #print(df_status.head(3))
         generate_status_dat(df_status)
 
     # MeasurementUnits.CSV
     df_unit = process_measurement_units()
     if df_unit is not None:
-        print("\nFirst rows of the measurement units DataFrame:")
-        print(df_unit.head(3))
+        #print("\nFirst rows of the measurement units DataFrame:")
+        #print(df_unit.head(3))
         generate_unit_dat(df_unit)
 
 def process_station_points():
@@ -38,12 +38,29 @@ def process_station_points():
         print(f"Error: Could not find the file at {csv_path}")
         return None
     
-    print(f"File found: {csv_path}")
+    #print(f"File found: {csv_path}")
     df_station = pd.read_csv(csv_path)
     
     if 'PKEY' not in df_station.columns:
         print("Error: The PKEY column is not present in StationPoints.CSV")
         return None
+    
+
+    # XREF CREATION
+    xref_columns = ['PKEY', 'NAME', 'DESC', 'ZONEID', 'ALRMPRIOR']
+    
+    # Create Xref DataFrame
+    df_xref = df_station[xref_columns].copy()
+    
+    # Save Xref file
+    xref_folder = os.path.join('..', 'Xrefs')
+    if not os.path.exists(xref_folder):
+        os.makedirs(xref_folder)
+    xref_path = os.path.join(xref_folder, 'station_xref.csv')
+    df_xref.to_csv(xref_path, index=False)
+    print(f"Xref file generated: {xref_path}")
+
+    ##################
     
     column_mapping = {
         'NAME': 'Key',
@@ -54,8 +71,8 @@ def process_station_points():
     df_station = df_station.rename(columns=column_mapping)
     df_station['Order'] = range(1, len(df_station) + 1)
     
-    print("\nFirst rows of the stations DataFrame:")
-    print(df_station.head())
+
+    #print(df_station.head())
     
     return df_station
 
@@ -65,8 +82,31 @@ def process_analog_points(df_station):
         print(f"Error: Could not find the file at {csv_path}")
         return None
     
-    print(f"File found: {csv_path}")
-    df = pd.read_csv(csv_path)
+
+    useful_columns = ['RTUID', 'NAME', 'ENGUNITS', 'SCALEFACT', 'STATIONPID', 
+                      'PREMGHI', 'PREMGSEVHI', 'EMGHI', 'EMGSEVHI',
+                      'PREMGLO', 'PREMGSEVLO', 'EMGLO', 'EMGSEVLO']
+    
+    # Lee solo las columnas que necesitas
+    df = pd.read_csv(csv_path, usecols=useful_columns)
+    #print(f"File found: {csv_path}")
+
+
+    # XREF CREATION
+       
+    xref_columns = useful_columns
+    
+    
+    df_xref = df[xref_columns].copy()
+    
+    
+    xref_folder = os.path.join('..', 'Xrefs')
+    if not os.path.exists(xref_folder):
+        os.makedirs(xref_folder)
+    xref_path = os.path.join(xref_folder, 'analog_xref.csv')
+    df_xref.to_csv(xref_path, index=False)
+    print(f"Xref file generated: {xref_path}")
+    ################
     
     df_analog = pd.DataFrame()
     df_analog['Type'] = df.get('RTUID', '').apply(lambda x: 2 if pd.isna(x) or x == '' else 1)
@@ -116,6 +156,23 @@ def process_status_points(df_station):
         return None
     
     df_status = pd.read_csv(csv_path)
+
+
+    ###############
+    xref_columns = ['NAME', 'STATIONPID', 'PREFSUFFID', 'USERTYPEID', 'NORMSTATE']
+
+    # Create Xref DataFrame
+    df_xref = df_status[xref_columns].copy()
+
+    # Save Xref file
+    xref_folder = os.path.join('..', 'Xrefs')
+    if not os.path.exists(xref_folder):
+        os.makedirs(xref_folder)
+    xref_path = os.path.join(xref_folder, 'status_xref.csv')
+    df_xref.to_csv(xref_path, index=False)
+    print(f"Xref file generated: {xref_path}")
+
+    #################
     
     prefix_suffixes_path = os.path.join('..', 'Inputs', 'PrefixSuffixes.csv')
     if not os.path.exists(prefix_suffixes_path):
@@ -164,9 +221,25 @@ def process_measurement_units():
         print(f"Error: Could not find the file at {csv_path}")
         return None
     
-    print(f"File found: {csv_path}")
+    #print(f"File found: {csv_path}")
     df = pd.read_csv(csv_path)
     
+    xref_columns = ['Desc']
+
+    # Create Xref DataFrame
+    ##################
+    df_xref = df[xref_columns].copy()
+
+    # Save Xref file
+    xref_folder = os.path.join('..', 'Xrefs')
+    if not os.path.exists(xref_folder):
+        os.makedirs(xref_folder)
+    xref_path = os.path.join(xref_folder, 'measurement_units_xref.csv')
+    df_xref.to_csv(xref_path, index=False)
+    print(f"Xref file generated: {xref_path}")
+    ####################
+
+
     df_unit = pd.DataFrame()
     df_unit['record'] = range(1, len(df) + 1)
     df_unit['NAME'] = df['Desc']
@@ -232,7 +305,7 @@ def generate_analog_dat(df_analog):
         
         f.write(" 0")
     
-    print(f"analog_dat.dat file generated: {analog_filename}")
+    print(f".dat file generated: {analog_filename}")
 
 
 def generate_status_dat(df_status):
@@ -254,7 +327,7 @@ def generate_status_dat(df_status):
         
         f.write(" 0")
     
-    print(f"status_dat.dat file generated: {status_filename}")
+    print(f".dat file generated: {status_filename}")
 
 def generate_unit_dat(df_unit):
     dat_folder = os.path.join('..', 'Dat_files')
@@ -278,7 +351,7 @@ def generate_unit_dat(df_unit):
         
         f.write(" 0")
     
-    print(f"unit_dat.dat file generated: {unit_filename}")
+    print(f".dat file generated: {unit_filename}")
 
 if __name__ == "__main__":
     scada_processing()

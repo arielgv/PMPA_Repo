@@ -1,6 +1,6 @@
 *
-	4	STATUS	1	3	4	5	19	29	40	49
-*	record	Order	Type	Key	Name	pStation	pStates	pALARM_GROUP	pConfiguredAORGroup	ConfigNormalState
+	4	STATUS	0	1	3	4	5	19	29	40	49
+*	record	OrderNo	Type	Key	Name	pStation	pStates	pALARM_GROUP	pConfiguredAORGroup	ConfigNormalState
 	1	1	1	'01001001'	'SCADA'	1	203	1	1	1
 	2	2	1	'01001002'	'ALFULL'	1	203	1	1	0
 	3	3	1	'01001003'	'HostA'	1	212	1	1	0
